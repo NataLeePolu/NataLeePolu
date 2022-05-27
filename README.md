@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @NataLeePolu
+- 👋 Hi, I’m NataLee
 - 👀 I’m interested in Quality Assurance
 - 🌱 I’m currently learning Manual QA
 
