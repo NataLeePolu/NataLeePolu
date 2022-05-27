@@ -1,0 +1,558 @@
+{
+	"info": {
+		"_postman_id": "bf16e9aa-62f5-4a95-aeab-5859e0c17dd3",
+		"name": "PoltavskaLuhova-SWAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Task 1",
+			"item": [
+				{
+					"name": "Get Luke Skywalker",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"lukeUrl\", \"https://swapi.dev/api/people/1/\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"The person is Luke\", function () {",
+									"    var jsonData = pm.response.json().name;",
+									"    pm.expect(jsonData).to.eql(\"Luke Skywalker\");",
+									"    //console.log(jsonData)",
+									"});",
+									"pm.test(\"Extract Luke's homeworld\", function () {",
+									"    var jsonData = pm.response.json().homeworld;",
+									"    pm.collectionVariables.set(\"homeWorldUrl\", jsonData);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lukeUrl}}",
+							"host": [
+								"{{lukeUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Luke's planet",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"The planet name is Tatooine\", function () {",
+									"    var jsonData = pm.response.json().name;",
+									"    pm.expect(jsonData).to.eql(\"Tatooine\");",
+									"    //console.log(jsonData)",
+									"});",
+									"pm.test(\"Population of Tatooine is 200000\", function () {",
+									"    var jsonData = pm.response.json().population;",
+									"    pm.expect(jsonData).to.eql(\"200000\");",
+									"    //console.log(jsonData)",
+									"});",
+									"pm.test(\"Extract first film of Tatooine \", function () {",
+									"    var jsonData = pm.response.json().films[0];",
+									"    pm.collectionVariables.set(\"firstFilm\", jsonData);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{homeWorldUrl}}",
+							"host": [
+								"{{homeWorldUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "First film",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Title of film is A New Hope\", function () {",
+									"    var jsonData = pm.response.json().title;",
+									"    pm.expect(jsonData).to.eql(\"A New Hope\");",
+									"    //console.log(jsonData)",
+									"});",
+									"pm.test(\"Find contain a Luke\", function () {",
+									"    var jsonData = pm.response.json().characters[0];",
+									"    pm.expect(jsonData).to.eql(pm.collectionVariables.get(\"lukeUrl\"));",
+									"    //console.log(jsonData) ",
+									"});",
+									"pm.test(\"Find contain the Tatuine\", function () {",
+									"    var jsonData = pm.response.json().planets[0];",
+									"    pm.expect(jsonData).to.eql(pm.collectionVariables.get(\"homeWorldUrl\"));",
+									"    //console.log(jsonData)",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{firstFilm}}",
+							"host": [
+								"{{firstFilm}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task 2",
+			"item": [
+				{
+					"name": "Find starship Republic attack cruiser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"baseUrl\", \"https://swapi.dev/api/\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Extract film\", function () {",
+									"    var jsonData = pm.response.json().results[0].films[0];",
+									"    pm.collectionVariables.set(\"film\", jsonData);",
+									"    //console.log(jsonData)",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}starships/?search=Republic attack cruiser",
+							"host": [
+								"{{baseUrl}}starships"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Republic attack cruiser"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find film details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Find film by title\", function () {",
+									"    var jsonData = pm.response.json().title;",
+									"    pm.expect(jsonData).to.eql(\"Revenge of the Sith\");",
+									"    //console.log(jsonData)",
+									"});",
+									"pm.test(\"Find film's date release\", function () {",
+									"    var jsonData = pm.response.json().release_date;",
+									"    pm.expect(jsonData).to.eql(\"2005-05-19\");",
+									"    //console.log(jsonData)",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{film}}",
+							"host": [
+								"{{film}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Film title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Title count is\", function () {",
+									"    var jsonData = pm.response.json().count;",
+									"    pm.expect(jsonData).to.eql(1);",
+									"    //console.log(jsonData)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}films/?search={{filmTitle}}",
+							"host": [
+								"{{baseUrl}}films"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "{{filmTitle}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task 3",
+			"item": [
+				{
+					"name": "Find T-16 Skyhopper",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"baseUrl\", \"https://swapi.dev/api/\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Find vehicle speed\", function () {",
+									"    var jsonData = pm.response.json().results[0].max_atmosphering_speed;",
+									"    pm.expect(jsonData).to.eql(\"1200\");",
+									"    //console.log(jsonData)",
+									"});",
+									"pm.test(\"Extract T-16 film\", function () {",
+									"    var jsonData = pm.response.json().results[0].films[0];",
+									"    pm.collectionVariables.set(\"t16Film\", jsonData);",
+									"    //console.log(jsonData)",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}vehicles/?search=T-16 skyhopper",
+							"host": [
+								"{{baseUrl}}vehicles"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "T-16 skyhopper"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T-16 film",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Find species\", function () {",
+									"    var jsonData = pm.response.json().species[pm.response.json().species.length-1];",
+									"    pm.expect(jsonData).to.eql(\"https://swapi.dev/api/species/5/\");",
+									"    pm.collectionVariables.set(\"species\", jsonData);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{t16Film}}",
+							"host": [
+								"{{t16Film}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get species",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Find species's name\", function () {",
+									"    var jsonData = pm.response.json().name;",
+									"    pm.expect(jsonData).to.eql(\"Hutt\");",
+									"    //console.log(jsonData)",
+									"});",
+									"pm.test(\"Find species's classification\", function () {",
+									"    var jsonData = pm.response.json().classification;",
+									"    pm.expect(jsonData).to.eql(\"gastropod\");",
+									"    //console.log(jsonData)",
+									"});",
+									"pm.test(\"Find species's eye colors\", function () {",
+									"    var jsonData = pm.response.json().eye_colors;",
+									"    pm.expect(jsonData).to.eql(\"yellow, red\");",
+									"    //console.log(jsonData)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{species}}",
+							"host": [
+								"{{species}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": ""
+		},
+		{
+			"key": "homeworld",
+			"value": ""
+		},
+		{
+			"key": "films",
+			"value": ""
+		},
+		{
+			"key": "firstFilm",
+			"value": ""
+		},
+		{
+			"key": "first_film",
+			"value": ""
+		},
+		{
+			"key": "characters",
+			"value": ""
+		},
+		{
+			"key": "planets",
+			"value": ""
+		},
+		{
+			"key": "starship",
+			"value": ""
+		},
+		{
+			"key": "film",
+			"value": ""
+		},
+		{
+			"key": "find_film",
+			"value": ""
+		},
+		{
+			"key": "film_title",
+			"value": ""
+		},
+		{
+			"key": "t16_film",
+			"value": ""
+		},
+		{
+			"key": "species",
+			"value": ""
+		},
+		{
+			"key": "max_atmosphering_speed",
+			"value": ""
+		},
+		{
+			"key": "count",
+			"value": ""
+		},
+		{
+			"key": "LukeUrl",
+			"value": ""
+		},
+		{
+			"key": "HomeWorldUrl",
+			"value": ""
+		},
+		{
+			"key": "homeWorldUrl",
+			"value": ""
+		},
+		{
+			"key": "lukeUrl",
+			"value": ""
+		},
+		{
+			"key": "filmTitle",
+			"value": ""
+		},
+		{
+			"key": "starShip",
+			"value": ""
+		},
+		{
+			"key": "t16Film",
+			"value": ""
+		}
+	]
+}
